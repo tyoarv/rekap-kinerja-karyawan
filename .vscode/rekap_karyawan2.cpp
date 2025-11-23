@@ -1,6 +1,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include <limits>
 using namespace std;
 
 // Struktur Data Karyawan
@@ -22,6 +23,41 @@ void urutkanKinerja(Karyawan dataKaryawan[], int jumlahKaryawan);
 void tampilkanHasil(Karyawan dataKaryawan[], int jumlahKaryawan);
 void tampilkanFilter(Karyawan dataKaryawan[], int jumlahKaryawan, string filterStatus);
 void tampilkanMenu();
+
+
+//Fungsi Validasi Input Angka
+float inputFloat(string pesan) {
+    float nilai;
+    while (true) {
+        cout << pesan;
+        cin >> nilai;
+
+        if (cin.fail()) {  // input bukan angka
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "⚠️ Input harus berupa angka! Coba lagi.\n";
+            continue;
+        }
+        return nilai;
+    }
+}
+
+int inputInt(string pesan) {
+    int nilai;
+    while (true) {
+        cout << pesan;
+        cin >> nilai;
+
+        if (cin.fail()) {  
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "⚠️ Input harus bilangan bulat! Coba lagi.\n";
+            continue;
+        }
+        return nilai;
+    }
+}
+
 
 // ======== Fungsi Menghitung Persentase ========
 float hitungPersentase(float target, float realisasi) {
@@ -159,8 +195,8 @@ int main() {
 
     do {
         tampilkanMenu();
-        cout << "Pilih menu (1-4): ";
-        cin >> pilihan;
+        pilihan = inputInt("Pilih menu (1-6): ");
+
 
         switch (pilihan) {
         case 1:
