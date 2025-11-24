@@ -85,15 +85,35 @@ void inputData(Karyawan dataKaryawan[], int &jumlahKaryawan) {
 
     for (int i = 0; i < jumlahKaryawan; i++) {
         cout << "\nData Karyawan ke-" << i + 1 << endl;
-        cout << "Nama: ";
-        getline(cin, dataKaryawan[i].nama);
-        cout << "Target Penjualan (Rp): ";
-        cin >> dataKaryawan[i].target;
-        cout << "Realisasi Penjualan (Rp): ";
-        cin >> dataKaryawan[i].realisasi;
-        cout << "Jumlah Pelanggaran: ";
-        cin >> dataKaryawan[i].pelanggaran;
-        cin.ignore();
+
+        do {
+            cout << "Nama: ";
+            getline(cin, dataKaryawan[i].nama);
+            if (dataKaryawan[i].nama.empty()) {
+                cout << "⚠️ Nama tidak boleh kosong!\n";
+            }
+        } while (dataKaryawan[i].nama.empty());
+
+        do {
+            dataKaryawan[i].target = inputFloat("Target Penjualan (Rp): ");
+            if (dataKaryawan[i].target <= 0) {
+                cout << "⚠️ Target harus lebih dari 0!\n";
+            }
+        } while (dataKaryawan[i].target <= 0);
+
+        do {
+            dataKaryawan[i].realisasi = inputFloat("Realisasi Penjualan (Rp): ");
+            if (dataKaryawan[i].realisasi < 0) {
+                cout << "⚠️ Realisasi tidak boleh negatif!\n";
+            }
+        } while (dataKaryawan[i].realisasi < 0);
+
+        do {
+            dataKaryawan[i].pelanggaran = inputInt("Jumlah Pelanggaran: ");
+            if (dataKaryawan[i].pelanggaran < 0) {
+                cout << "⚠️ Pelanggaran tidak boleh negatif!\n";
+            }
+        } while (dataKaryawan[i].pelanggaran < 0);
 
         // Hitung otomatis
         dataKaryawan[i].persentase = hitungPersentase(dataKaryawan[i].target, dataKaryawan[i].realisasi);
