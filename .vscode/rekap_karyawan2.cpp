@@ -197,13 +197,24 @@ void tampilkanFilter(Karyawan dataKaryawan[], int jumlahKaryawan, string filterS
     cout << "=======================================================================" << endl;
 }
 
+int cariKaryawan(Karyawan dataKaryawan[], int jumlahKaryawan, string namaDicari) {
+    for (int i = 0; i < jumlahKaryawan; i++) {
+        if (dataKaryawan[i].nama == namaDicari) {
+            return i;  // ditemukan
+        }
+    }
+    return -1;  // tidak ditemukan
+}
+
+
 // ======== Menu Utama ========
 void tampilkanMenu() {
     cout << "\n====================== MENU UTAMA ======================" << endl;
     cout << "1. Input Data Karyawan" << endl;
     cout << "2. Tampilkan Semua Data" << endl;
     cout << "3. Filter Berdasarkan Status" << endl;
-    cout << "4. Keluar Program" << endl;
+    cout << "4. Cari Karyawan Berdasarkan Nama" << endl;
+    cout << "5. Keluar Program" << endl;
     cout << "========================================================" << endl;
 }
 
@@ -244,13 +255,38 @@ int main() {
                 cout << "Pilihan tidak valid!" << endl;
             break;
         }
-        case 4:
+
+        case 4: {
+            cin.ignore();
+            string namaDicari;
+            cout << "\nMasukkan nama yang ingin dicari: ";
+            getline(cin, namaDicari);
+
+            int index = cariKaryawan(dataKaryawan, jumlahKaryawan, namaDicari);
+
+            if (index == -1) {
+                cout << "\n❌ Karyawan dengan nama \"" << namaDicari << "\" tidak ditemukan.\n";
+            } else {
+                cout << "\n✓ Data ditemukan!\n";
+                cout << "Nama         : " << dataKaryawan[index].nama << endl;
+                cout << "Target       : " << dataKaryawan[index].target << endl;
+                cout << "Realisasi    : " << dataKaryawan[index].realisasi << endl;
+                cout << "Pelanggaran  : " << dataKaryawan[index].pelanggaran << endl;
+                cout << "Persentase   : " << dataKaryawan[index].persentase << "%\n";
+                cout << "Status       : " << dataKaryawan[index].status << endl;
+                cout << "Rekomendasi  : " << dataKaryawan[index].rekomendasi << endl;
+            }
+            break;
+        }
+
+
+        case 5:
             cout << "\nTerima kasih! Program selesai.\n";
             break;
         default:
             cout << "Pilihan tidak valid. Coba lagi.\n";
         }
-    } while (pilihan != 4);
+    } while (pilihan != 5);
 
     return 0;
 }
