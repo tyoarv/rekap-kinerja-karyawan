@@ -22,6 +22,7 @@ void inputData(Karyawan dataKaryawan[], int &jumlahKaryawan);
 void urutkanKinerja(Karyawan dataKaryawan[], int jumlahKaryawan);
 void tampilkanHasil(Karyawan dataKaryawan[], int jumlahKaryawan);
 void tampilkanFilter(Karyawan dataKaryawan[], int jumlahKaryawan, string filterStatus);
+void tampilkanTop3(Karyawan dataKaryawan[], int jumlahKaryawan);
 void tampilkanMenu();
 
 
@@ -206,6 +207,25 @@ int cariKaryawan(Karyawan dataKaryawan[], int jumlahKaryawan, string namaDicari)
     return -1;  // tidak ditemukan
 }
 
+void tampilkanTop3(Karyawan dataKaryawan[], int jumlahKaryawan) {
+    if (jumlahKaryawan == 0) {
+        cout << "\n⚠️ Belum ada data karyawan!\n";
+        return;
+    }
+
+    cout << "\n=============== TOP 3 KARYAWAN TERBAIK ===============" << endl;
+    
+    int batas = (jumlahKaryawan < 3) ? jumlahKaryawan : 3;
+    
+    for (int i = 0; i < batas; i++) {
+        cout << "Peringkat " << (i + 1) << ": " << dataKaryawan[i].nama << endl;
+        cout << "   Persentase: " << fixed << setprecision(2) << dataKaryawan[i].persentase << "%" << endl;
+        cout << "   Status: " << dataKaryawan[i].status << endl;
+        cout << "   Rekomendasi: " << dataKaryawan[i].rekomendasi << endl;
+        cout << "----------------------------------------" << endl;
+    }
+    cout << "======================================================" << endl;
+}
 
 // ======== Menu Utama ========
 void tampilkanMenu() {
@@ -214,7 +234,8 @@ void tampilkanMenu() {
     cout << "2. Tampilkan Semua Data" << endl;
     cout << "3. Filter Berdasarkan Status" << endl;
     cout << "4. Cari Karyawan Berdasarkan Nama" << endl;
-    cout << "5. Keluar Program" << endl;
+    cout << "5. Top 3 Karyawan Terbaik" << endl;  
+    cout << "6. Keluar Program" << endl;
     cout << "========================================================" << endl;
 }
 
@@ -279,14 +300,16 @@ int main() {
             break;
         }
 
-
-        case 5:
+        case 5:  // Case baru untuk TOP 3
+            tampilkanTop3(dataKaryawan, jumlahKaryawan);
+            break;
+        case 6:
             cout << "\nTerima kasih! Program selesai.\n";
             break;
         default:
             cout << "Pilihan tidak valid. Coba lagi.\n";
         }
-    } while (pilihan != 5);
+    } while (pilihan != 6);
 
     return 0;
 }
