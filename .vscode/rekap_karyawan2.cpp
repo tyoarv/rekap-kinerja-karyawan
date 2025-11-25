@@ -232,6 +232,58 @@ void tampilkanTop3(Karyawan dataKaryawan[], int jumlahKaryawan) {
     }
     cout << "======================================================" << endl;
 }
+// ======== Fungsi Menampilkan Statistik Kinerja ========
+void tampilkanStatistik(Karyawan dataKaryawan[], int jumlahKaryawan) {
+    if (jumlahKaryawan == 0) {
+        cout << "\n⚠️ Belum ada data karyawan!\n";
+        return;
+    }
+
+    float totalPersen = 0;
+    float maxPersen = dataKaryawan[0].persentase;
+    float minPersen = dataKaryawan[0].persentase;
+
+    int jmlTercapai = 0;
+    int jmlTidak = 0;
+    int jmlBonus = 0;
+    int jmlAman = 0;
+    int jmlPotongan = 0;
+
+    for (int i = 0; i < jumlahKaryawan; i++) {
+
+        totalPersen += dataKaryawan[i].persentase;
+
+        if (dataKaryawan[i].persentase > maxPersen)
+            maxPersen = dataKaryawan[i].persentase;
+
+        if (dataKaryawan[i].persentase < minPersen)
+            minPersen = dataKaryawan[i].persentase;
+
+        if (dataKaryawan[i].status == "Tercapai") jmlTercapai++;
+        if (dataKaryawan[i].status == "Tidak Tercapai") jmlTidak++;
+
+        if (dataKaryawan[i].rekomendasi == "Bonus") jmlBonus++;
+        if (dataKaryawan[i].rekomendasi == "Aman") jmlAman++;
+        if (dataKaryawan[i].rekomendasi == "Potongan") jmlPotongan++;
+    }
+
+    float rataRata = totalPersen / jumlahKaryawan;
+
+    cout << "\n===================== STATISTIK KINERJA =====================" << endl;
+    cout << "Jumlah Karyawan       : " << jumlahKaryawan << endl;
+    cout << "Rata-rata Kinerja     : " << fixed << setprecision(2) << rataRata << "%" << endl;
+    cout << "Kinerja Tertinggi     : " << maxPersen << "%" << endl;
+    cout << "Kinerja Terendah      : " << minPersen << "%" << endl;
+    cout << "--------------------------------------------------------------" << endl;
+    cout << "Jumlah Status Tercapai        : " << jmlTercapai << endl;
+    cout << "Jumlah Status Tidak Tercapai  : " << jmlTidak << endl;
+    cout << "--------------------------------------------------------------" << endl;
+    cout << "Jumlah Rekomendasi Bonus      : " << jmlBonus << endl;
+    cout << "Jumlah Rekomendasi Aman       : " << jmlAman << endl;
+    cout << "Jumlah Rekomendasi Potongan   : " << jmlPotongan << endl;
+    cout << "==============================================================" << endl;
+}
+
 
 // ======== Menu Utama ========
 void tampilkanMenu() {
@@ -241,7 +293,8 @@ void tampilkanMenu() {
     cout << "3. Filter Berdasarkan Status" << endl;
     cout << "4. Cari Karyawan Berdasarkan Nama" << endl;
     cout << "5. Top 3 Karyawan Terbaik" << endl;  
-    cout << "6. Keluar Program" << endl;
+    cout << "6. Statistik Kinerja" << endl;
+    cout << "7. Keluar Program" << endl;
     cout << "========================================================" << endl;
 }
 
@@ -310,12 +363,15 @@ int main() {
             tampilkanTop3(dataKaryawan, jumlahKaryawan);
             break;
         case 6:
+            tampilkanStatistik(dataKaryawan, jumlahKaryawan);
+            break;
+        case 7:
             cout << "\nTerima kasih! Program selesai.\n";
             break;
         default:
             cout << "Pilihan tidak valid. Coba lagi.\n";
         }
-    } while (pilihan != 6);
+    } while (pilihan != 7);
 
     return 0;
 }
