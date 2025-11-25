@@ -82,7 +82,8 @@ string tentukanRekomendasi(float persentase, int pelanggaran) {
 void inputData(Karyawan dataKaryawan[], int &jumlahKaryawan) {
     cout << "\nMasukkan jumlah karyawan: ";
     cin >> jumlahKaryawan;
-    cin.ignore();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 
     for (int i = 0; i < jumlahKaryawan; i++) {
         cout << "\nData Karyawan ke-" << i + 1 << endl;
@@ -115,6 +116,8 @@ void inputData(Karyawan dataKaryawan[], int &jumlahKaryawan) {
                 cout << "⚠️ Pelanggaran tidak boleh negatif!\n";
             }
         } while (dataKaryawan[i].pelanggaran < 0);
+
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         // Hitung otomatis
         dataKaryawan[i].persentase = hitungPersentase(dataKaryawan[i].target, dataKaryawan[i].realisasi);
@@ -198,6 +201,7 @@ void tampilkanFilter(Karyawan dataKaryawan[], int jumlahKaryawan, string filterS
     cout << "=======================================================================" << endl;
 }
 
+// ======== Fungsi Pencarian Karyawan ========
 int cariKaryawan(Karyawan dataKaryawan[], int jumlahKaryawan, string namaDicari) {
     for (int i = 0; i < jumlahKaryawan; i++) {
         if (dataKaryawan[i].nama == namaDicari) {
@@ -207,6 +211,8 @@ int cariKaryawan(Karyawan dataKaryawan[], int jumlahKaryawan, string namaDicari)
     return -1;  // tidak ditemukan
 }
 
+
+// ======== Fungsi Menampilkan TOP 3 Karyawan Terbaik ========
 void tampilkanTop3(Karyawan dataKaryawan[], int jumlahKaryawan) {
     if (jumlahKaryawan == 0) {
         cout << "\n⚠️ Belum ada data karyawan!\n";
